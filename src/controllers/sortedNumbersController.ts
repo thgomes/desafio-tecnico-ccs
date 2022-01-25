@@ -6,15 +6,19 @@ class SortedNumbersController {
   }
 
   async index (req, res) {
-    if (SortedNumbersLoader.status === 'FINISHED') {
+    const { page = 1 } = req.query
+
+    if (SortedNumbersLoader.status !== 'FINISHED') {
       return res.json({
-        sortedNumbers: SortedNumbersLoader.sortedNumbers
+        message: 'The data is being processed, please try again in a while',
+        status: SortedNumbersLoader.status
       })
     }
 
+    const sortedNumbers = SortedNumbersLoader.sortedNumbers.slice((page - 1) * 100, page * 100)
+
     return res.json({
-      message: 'The data is being processed, please try again in a while',
-      status: SortedNumbersLoader.status
+      sortedNumbers: sortedNumbers
     })
   }
 }
