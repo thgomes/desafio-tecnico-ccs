@@ -1,10 +1,10 @@
 import { AxiosParallelInput } from 'axios-parallel'
-import { parallelRequests } from '../services/parallelRequests'
+import { parallelRequests } from '../../services/parallelRequests'
 
 export async function numbersExtractor () {
   const requests: AxiosParallelInput = []
 
-  for (let page = 1; page <= 1000; page++) {
+  for (let page = 1; page <= 10000; page++) {
     requests.push({
       method: 'GET',
       url: `http://challenge.dienekes.com.br/api/numbers?page=${page}`
